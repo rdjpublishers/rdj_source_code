@@ -587,6 +587,94 @@ a.ci-value:hover{color:var(--brass);}
   .contact-grid{grid-template-columns:280px 1fr;}
   .info-hero h1{font-size:2.4rem;}
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   PERMANENT SITE FOOTER — fixed at viewport bottom so the legal links
+   + ad disclosure are reachable on every page (Gallery / About /
+   Contact). Sits below the sticky topbar / cat-tabs content.
+   ═══════════════════════════════════════════════════════════════════ */
+.site-footer{
+  position:fixed;
+  left:0;right:0;bottom:0;
+  z-index:80;
+  background:rgba(var(--bg-rgb),0.92);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--border);
+  padding:9px 16px 10px;
+  text-align:center;
+  font-family:var(--sans);
+  font-size:12px;
+  line-height:1.55;
+  color:var(--muted);
+  user-select:none;
+}
+.site-footer-nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:5px 10px;
+  row-gap:5px;
+  margin-bottom:4px;
+}
+.site-footer-nav a{
+  color:var(--text);
+  text-decoration:none;
+  font-weight:500;
+  transition:color .2s;
+}
+.site-footer-nav a.legal{
+  color:var(--text);
+  font-weight:600;
+  text-decoration:underline;
+  text-decoration-color:var(--muted);
+  text-underline-offset:2px;
+}
+.site-footer-nav a:hover{
+  color:var(--brass-l);
+  text-decoration-color:currentColor;
+}
+.site-footer-sep{
+  color:var(--dim);
+  user-select:none;
+}
+.site-footer-meta{
+  font-size:11px;
+  color:var(--muted);
+  opacity:.9;
+  margin-bottom:3px;
+}
+.site-footer-meta a{
+  color:var(--text);
+  text-decoration:none;
+  font-weight:600;
+}
+.site-footer-meta a:hover{color:var(--brass-l);}
+.site-footer-disclosure{
+  max-width:720px;
+  margin:0 auto;
+  font-size:10.5px;
+  color:var(--muted);
+  font-style:italic;
+  opacity:.85;
+}
+.site-footer-disclosure a{
+  color:var(--text);
+  font-style:normal;
+  text-decoration:underline;
+  text-decoration-color:var(--muted);
+  text-underline-offset:2px;
+}
+.site-footer-disclosure a:hover{
+  color:var(--brass-l);
+  text-decoration-color:currentColor;
+}
+@media(max-width:480px){
+  .site-footer{padding:7px 10px 8px;font-size:11px;}
+  .site-footer-meta{display:none;}
+  .site-footer-nav{gap:4px 7px;}
+}
 </style>
 </head>
 <body>
@@ -1772,6 +1860,42 @@ function init(){
   handleDeepLink();
 }
 document.addEventListener('DOMContentLoaded',init);
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PERMANENT SITE FOOTER — fixed at the bottom of the viewport so
+     the legal links + ad disclosure are reachable on every page
+     (Gallery / About / Contact). Stays above the page content and
+     below the sticky topbar / cat-tabs in z-order.
+     ═══════════════════════════════════════════════════════════════ -->
+<footer class="site-footer" aria-label="Site footer">
+  <nav class="site-footer-nav" aria-label="Legal and navigation">
+    <a href="https://rdjpublishers.com/about.html">About</a>
+    <span class="site-footer-sep" aria-hidden="true">·</span>
+    <a href="https://rdjpublishers.com/contact.html">Contact</a>
+    <span class="site-footer-sep" aria-hidden="true">·</span>
+    <a class="legal" href="https://rdjpublishers.com/privacy-policy.html">Privacy Policy</a>
+    <span class="site-footer-sep" aria-hidden="true">·</span>
+    <a class="legal" href="https://rdjpublishers.com/terms.html">Terms & Conditions</a>
+    <span class="site-footer-sep" aria-hidden="true">·</span>
+    <a class="legal" href="https://rdjpublishers.com/disclaimer.html">Disclaimer</a>
+    <span class="site-footer-sep" aria-hidden="true">·</span>
+    <a href="https://rdjpublishers.com/sitemap.xml">Sitemap</a>
+  </nav>
+  <div class="site-footer-meta">
+    © <span id="footer-yr"></span> <a href="https://rdjpublishers.com/" target="_blank" rel="noopener">RDJ Publishers</a>. All rights reserved.
+  </div>
+  <div class="site-footer-disclosure">
+    This site may display ads served by Google AdSense. See our <a href="https://rdjpublishers.com/privacy-policy.html">Privacy Policy</a> for details.
+  </div>
+</footer>
+
+<script>
+  /* keep the new footer year in sync with the existing dynamic year logic */
+  (function(){
+    var el=document.getElementById('footer-yr');
+    if(el) el.textContent=new Date().getFullYear();
+  })();
 </script>
 </body>
 </html>
