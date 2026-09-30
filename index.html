@@ -531,6 +531,18 @@ a.ci-value:hover{color:var(--brass);}
   .site-footer-meta{display:none;}
   .site-footer-nav{gap:4px 7px;}
 }
+
+/* Guide / editorial content under the gallery */
+.guide{max-width:820px;margin:48px auto 24px;padding:0 4px;color:var(--muted);font-size:14px;line-height:1.75;}
+.guide h2{font-family:var(--display);color:var(--text);font-size:1.35rem;margin:0 0 12px;}
+.guide h3{font-family:var(--display);color:var(--text);font-size:1.02rem;margin:26px 0 8px;}
+.guide p{margin:0 0 12px;}
+.guide ul{margin:0 0 12px 1.2rem;padding:0;}
+.guide li{margin-bottom:6px;}
+.guide details{border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:10px;background:var(--surface);}
+.guide summary{cursor:pointer;color:var(--text);font-weight:600;}
+.guide details p{margin:10px 0 0;}
+.guide a{color:var(--accent,#c9973f);}
 </style>
 </head>
 <body>
@@ -587,6 +599,45 @@ a.ci-value:hover{color:var(--brass);}
       </select>
     </div>
     <div class="grid" id="grid"></div>
+
+    <article class="guide" id="guide">
+      <h2>Free source packs and design resources, explained</h2>
+      <p>RDJ Source Codes is a small library of free downloadable zip packs that I put together and maintain myself as part of RDJ Publishers, my independent web studio in Tamil Nadu, India. Each entry pairs a preview image or animated GIF with a single zip file, so you can see what a pack looks like before you download it. There is no account to create and nothing to pay.</p>
+
+      <h3>What kinds of packs are in the library?</h3>
+      <p>Packs are grouped into six categories, which you can browse with the tabs above the gallery:</p>
+      <ul>
+        <li><strong>Templates</strong> — starting points for web pages such as portfolios and landing pages, written in plain HTML and CSS so they are easy to read and change.</li>
+        <li><strong>Icon Packs</strong> — sets of glyphs, usually SVG, for interfaces, presentations and slides.</li>
+        <li><strong>UI Kits</strong> — reusable interface pieces such as buttons, loaders and cards, with animated previews where that helps.</li>
+        <li><strong>Presets</strong> — colour and look presets for photo and video editing, such as LUT packs.</li>
+        <li><strong>Fonts</strong> — typefaces packaged for desktop or web use.</li>
+        <li><strong>Wallpapers</strong> — textures and backgrounds sized for phones and desktops.</li>
+      </ul>
+
+      <h3>How to download a pack</h3>
+      <p>Open any card to see a larger preview, its category and its tags. Press the download button and your browser saves the zip file. Use the search box to match a title, category or tag, and the sort menu to order results by newest, oldest, name or most downloaded.</p>
+
+      <h3>Using a downloaded zip</h3>
+      <p>Unzip the file with the built-in tool on your computer or phone. Open the folder and look for a short readme or the main file first. For a template, open <code>index.html</code> in a browser to see it running, then edit the text and colours in any code editor. For fonts, install the files on your device or upload them with your site. For presets, import them into your editing app using its preset or LUT menu.</p>
+
+      <h3>Tips for getting the most from a pack</h3>
+      <ul>
+        <li>Keep an untouched copy of the original zip so you can start over if an edit goes wrong.</li>
+        <li>Rename files and change the placeholder text and colours so your result looks like your own work.</li>
+        <li>Test templates on a phone as well as a desktop, since most visitors use small screens.</li>
+        <li>If you plan to use a pack in paid or client work, check for a licence note in the download and write to me if anything is unclear.</li>
+      </ul>
+
+      <h3>Troubleshooting</h3>
+      <p>If a download does not start, make sure your browser is not blocking downloads for this site, then try again. If a zip will not open, download it again, since an interrupted transfer can leave a damaged file. If a preview does not load, refresh the page or try another connection. If none of that helps, send me the pack name and your browser and device through the Contact page and I will look into it.</p>
+
+      <h3>Frequently asked questions</h3>
+      <details><summary>Do I need an account or an email address?</summary><p>No. You can browse and download without signing up or giving any personal details.</p></details>
+      <details><summary>Are the packs really free?</summary><p>Yes. The library is free to use. The site may show Google AdSense ads, which help cover running costs; the Privacy Policy explains how cookies are used.</p></details>
+      <details><summary>Can I request a pack?</summary><p>Yes. Use the Contact page to tell me what you need. Requests from visitors are a big part of what I build next, and I read every message.</p></details>
+      <details><summary>Who makes these packs?</summary><p>I do. RDJ Publishers is a one-person studio run by Ratheesh, and you can read more on the <a href="https://rdjpublishers.com/creator/">creator page</a>.</p></details>
+    </article>
   </div>
 </div>
 
@@ -694,13 +745,7 @@ a.ci-value:hover{color:var(--brass);}
 {
   "categories": ["Templates","Icon Packs","UI Kits","Presets","Fonts","Wallpapers"],
   "categoryEmojis": {"Templates":"🧩","Icon Packs":"🎨","UI Kits":"🧱","Presets":"🎛️","Fonts":"🔤","Wallpapers":"🖼️","Uncategorized":"🏷️"},
-  "files": [
-    {"id":"f1001","title":"Minimal Portfolio Template","category":"Templates","mediaUrl":"https://picsum.photos/seed/vault1/700/525","mediaType":"image","downloadUrl":"https://picsum.photos/seed/vault1/700/525","fileName":"minimal-portfolio-template.zip","tags":["html","css","portfolio"],"createdAt":"2026-07-01","downloads":0},
-    {"id":"f1002","title":"Line Icon Set — 120 Glyphs","category":"Icon Packs","mediaUrl":"https://picsum.photos/seed/vault2/700/525","mediaType":"image","downloadUrl":"https://picsum.photos/seed/vault2/700/525","fileName":"line-icon-set-120.zip","tags":["icons","svg","ui"],"createdAt":"2026-07-05","downloads":0},
-    {"id":"f1003","title":"Loading Spinner — Animated Preview","category":"UI Kits","mediaUrl":"https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif","mediaType":"gif","downloadUrl":"https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif","fileName":"ui-loading-spinners.zip","tags":["gif","loader","animation"],"createdAt":"2026-07-10","downloads":0},
-    {"id":"f1004","title":"Cinematic LUT Pack Vol.1","category":"Presets","mediaUrl":"https://picsum.photos/seed/vault4/700/525","mediaType":"image","downloadUrl":"https://picsum.photos/seed/vault4/700/525","fileName":"cinematic-lut-pack-vol1.zip","tags":["lut","color grading","video"],"createdAt":"2026-07-14","downloads":0},
-    {"id":"f1005","title":"Grain & Paper Wallpaper Set","category":"Wallpapers","mediaUrl":"https://picsum.photos/seed/vault5/700/525","mediaType":"image","downloadUrl":"https://picsum.photos/seed/vault5/700/525","fileName":"grain-paper-wallpapers.zip","tags":["wallpaper","texture","desktop"],"createdAt":"2026-07-18","downloads":0}
-  ]
+  "files": []
 }
 </script>
 
@@ -843,7 +888,8 @@ function renderGallery(){
   document.getElementById('g-count').innerHTML=`<b>${list.length}</b> file${list.length===1?'':'s'} available`;
   const grid=document.getElementById('grid');
   if(!list.length){
-    grid.innerHTML=`<div style="grid-column:1/-1"><div class="empty-state"><div class="es-ic">📭</div><h3>Nothing here yet</h3><p>Try a different category or search term.</p></div></div>`;
+    const none=!DATA.files.length;
+    grid.innerHTML=`<div style="grid-column:1/-1"><div class="empty-state"><div class="es-ic">📭</div><h3>${none?'New packs are on the way':'Nothing here yet'}</h3><p>${none?'I am preparing the first packs. Read how the library works below, or send me a request through the Contact page.':'Try a different category or search term.'}</p></div></div>`;
     return;
   }
   grid.innerHTML=list.map(cardHtml).join('');
