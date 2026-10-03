@@ -442,19 +442,20 @@ a.ci-value:hover{color:var(--brass);}
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   PERMANENT SITE FOOTER — fixed at viewport bottom so the legal links
-   + ad disclosure are reachable on every page (Gallery / About /
-   Contact). Sits below the sticky topbar / cat-tabs content.
+   SITE FOOTER — static block at the end of the document so it never
+   overlaps page content. The legal links + ad disclosure sit at the
+   very bottom of every page (Gallery / About / Contact).
    ═══════════════════════════════════════════════════════════════════ */
 .site-footer{
-  position:fixed;
-  left:0;right:0;bottom:0;
-  z-index:80;
+  position:static;
+  display:block;
+  width:100%;
+  margin-top:24px;
   background:rgba(var(--bg-rgb),0.92);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
   border-top:1px solid var(--border);
-  padding:9px 16px 10px;
+  padding:14px 16px 16px;
   text-align:center;
   font-family:var(--sans);
   font-size:12px;
@@ -1076,10 +1077,9 @@ document.addEventListener('DOMContentLoaded',init);
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     PERMANENT SITE FOOTER — fixed at the bottom of the viewport so
-     the legal links + ad disclosure are reachable on every page
-     (Gallery / About / Contact). Stays above the page content and
-     below the sticky topbar / cat-tabs in z-order.
+     SITE FOOTER — rendered as the last element in the document so
+     it always sits at the very bottom of the page (Gallery /
+     About / Contact). No longer overlaps page content.
      ═══════════════════════════════════════════════════════════════ -->
 <footer class="site-footer" aria-label="Site footer">
   <nav class="site-footer-nav" aria-label="Legal and navigation">
