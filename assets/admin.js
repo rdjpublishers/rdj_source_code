@@ -59,6 +59,20 @@ let EDITING_CAT = null;
 let PENDING_MEDIA = null; // {dataUrl?,url?,type,file?}
 let PENDING_ZIP   = null; // {dataUrl?,url?,fileName?,size?,file?}
 let GH_STATUS = '', GH_MSG = '', GH_PROGRESS = '';
+
+/* ──────────────────────────────────────────────────────────────────
+   FILENAME NORMALIZATION — guarantees the right extension on the
+   wire, regardless of how the user provided the file
+   (file picker, URL paste, or hand-typed filename).
+   ────────────────────────────────────────────────────────────────── */
+function _forceExt(name, ext) {
+  if (name == null || name === '') return name;
+  ext = String(ext || '').replace(/^\./, '');
+  if (!ext) return name;
+  // Split on ? or # so a URL like foo.zip?ver=2 still counts as having .zip
+  const cleaned = String(name).split(/[?#]/)[0];
+  return /\.[a-z0-9]{2,5}$/i.test(cleaned) ? name : cleaned + '.' + ext;
+}
 let ADMIN_CLICK_COUNT = 0, ADMIN_CLICK_TIMER = null;
 
 /* ──────────────────────────────────────────────────────────────────
@@ -514,7 +528,7 @@ function renderAdminAddForm() {
       ${zipAttach}
       <div class="or-div">or</div>
       <input class="afi" id="af-zip-url" type="url" placeholder="Paste a direct zip URL instead" value="${PENDING_ZIP && PENDING_ZIP.url ? ea(PENDING_ZIP.url) : ''}" oninput="setZipUrl(this.value)">
-      <div class="af-hint">Uploaded zips work instantly for local downloads. Head to the <b>GitHub Sync</b> tab and push to generate a permanent public download link automatically.</div>
+      <div class="af-hint">Uploaded zips work instantly for local downloads. Head to the <b>GitHub Sync</b> tab and push to generate a permanent public download link automatically. The system automatically appends <code>.zip</code> to the saved filename and to the GitHub upload path if it's missing — so downloads always come out as a real zip.</div>
     </div>
     <div>
       <label class="afl">Tags (comma separated)</label>
@@ -570,7 +584,13 @@ function handleZipFile(files) {
 function setZipUrl(v) {
   v = v.trim();
   if (!v) return;
-  PENDING_ZIP = { ...(PENDING_ZIP || {}), url: v, dataUrl: undefined, fileName: (PENDING_ZIP && PENDING_ZIP.fileName) || v.split('/').pop() };
+  const fromUrl = v.split('/').pop() || '';
+  PENDING_ZIP = {
+    ...(PENDING_ZIP || {}),
+    url: v,
+    dataUrl: undefined,
+    fileName: _forceExt((PENDING_ZIP && PENDING_ZIP.fileName) || fromUrl, 'zip')
+  };
 }
 function clearZip() { PENDING_ZIP = null; renderAdminAddForm(); }
 function cancelEditFile() { EDITING_ID = null; PENDING_MEDIA = null; PENDING_ZIP = null; renderAdminAddForm(); }
@@ -592,6 +612,9 @@ function submitFileForm() {
     return;
   }
   if (!fileName) fileName = (PENDING_ZIP && PENDING_ZIP.fileName) || (title.replace(/\s+/g, '-').toLowerCase() + '.zip');
+  // Always make sure the saved filename has a .zip extension — covers
+  // anyone who types a bare name in the "Download filename" field.
+  fileName = _forceExt(fileName, 'zip');
 
   if (EDITING_ID) {
     const idx = DATA.files.findIndex(f => f.id === EDITING_ID);
@@ -730,8 +753,18 @@ async function uploadDataUrlToRepo(dataUrl, token, owner, repo, folder, preferre
   if (!matches) throw new Error('Invalid data URL');
   const mime = matches[1];
   const b64  = matches[2];
-  const ext  = (preferredName && /\.([a-z0-9]+)$/i.exec(preferredName)) ? RegExp.$1 : (mime.split('/')[1] || 'bin');
-  const safeName = preferredName ? preferredName.replace(/[^a-zA-Z0-9._-]/g, '-') : ('file-' + Date.now() + '.' + ext);
+  // zips/ always lands as .zip on the wire; images/ follows the MIME
+  // (e.g. image/gif -> .gif, image/png -> .png) so GitHub raw serves
+  // the right Content-Type and the browser/OS recognizes the file.
+  // image/jpeg is normalized to .jpg because that's the form every
+  // browser/photo app expects.
+  const mimeExtRaw = (mime.split('/')[1] || 'bin').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const mimeExt = mimeExtRaw === 'jpeg' ? 'jpg' : mimeExtRaw;
+  const wantExt = folder === 'zips' ? 'zip' : mimeExt;
+  const safeBase = preferredName
+    ? preferredName.replace(/[^a-zA-Z0-9._-]/g, '-')
+    : ('file-' + Date.now());
+  const safeName = _forceExt(safeBase, wantExt);
   const fname = folder + '/' + Date.now() + '-' + Math.random().toString(36).slice(2, 5) + '-' + safeName;
   const api   = 'https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + fname;
   const put   = await fetch(api, {
